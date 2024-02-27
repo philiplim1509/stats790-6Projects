@@ -1,0 +1,9 @@
+```{r}
+library(magick)
+
+
+orange_cat = image_read("inspo_meme.gif") %>%
+  image_scale(10)
+
+orange_cat
+```
