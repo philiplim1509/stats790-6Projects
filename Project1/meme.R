@@ -1,4 +1,9 @@
 ```{r}
+setwd("C:/Users/phili/Documents/GitHub/stats220/Project1")
+```
+
+
+```{r}
 library(magick)
 
 
