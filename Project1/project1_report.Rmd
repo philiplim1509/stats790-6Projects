@@ -1,0 +1,183 @@
+---
+title: "Creating images with R"
+author: "Philip Liman, Plim294"
+subtitle: "with a little bit of magick"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css}
+body {
+  background-color: #659DBD;
+  font-size: 15px;
+}
+
+
+h2 {
+    color: green;
+    font-weight:700;
+    font-size: 30px;
+    font-family: "Lucida Console", "Courier New", monospace;
+    border: 2px solid powderblue;
+}
+
+h3 {
+    color: maroon;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+```
+
+## Project requirements
+Screenshot of the project:
+
+![](screenshot.png)
+
+I have met the requirement for this project because I have done all the requirement for the github criteria, which is to create read.md file that contains the all of information regarding the purpose of repo and the markdown syntax. 
+
+The static meme uses inspo_meme.png as the inspirations while the animation meme uses inspo_meme2 (Explained the key component).
+
+The static and animated meme have all the requirements and additional code that were not covered class (explanation in each topic are explain respectively below)
+
+I also did the optional objective, below is the link to my GitHub pages, where I upload all my stats 220 project.
+
+[Github Link](https://github.com/philiplim1509/stats220)
+
+Some of the images I used are saved locally in my PC. However, I uploaded everything on Git, please check the repository if you want to double check anything. Screenshot above shows what files is being stored in GIT.
+
+## My meme
+### Static
+!["Static_Image.png"](static_meme.png)
+
+Key Component: \n
+
+For context, I used two different meme inspirations (meme_inspo and meme_inspo2) for static and animated repectively. This is because for the static image, does not correlate well if its animated (eg, the text is too long, background text does not fit well within the image). I have asked permission for this and the lecturer have agreed for different meme inspirations for static and animated meme.
+
+The first thing I changed was the original image and added an aditional image to support the meme. The original joke was that a cat was getting suspicious because they figured out who is actually controlling the red dot light. 
+
+I added an additional image to further explain the meme, which is, when a cat is completely distracted once they see a red light dot, and another image to replace the original joke, which is they get suspicious when they figure out that it was us who controls the red dot light.
+
+```{r meme-code, eval=TRUE}
+
+library(magick)
+
+lookup = image_read("https://i.kym-cdn.com/entries/icons/mobile/000/047/940/cat_eating_looking_up.jpg") %>%
+  image_scale(400)
+
+orange_cat = image_read("https://cdn3.emoji.gg/emojis/1312-suscat.png") %>%
+  image_scale(400)
+
+
+meme_text1 = image_blank(400,225,"#000000") %>%
+  image_annotate("Looking at red dot light",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "sans",
+                 gravity = "Center")
+
+meme_text2 = image_blank(400,400,"#000000") %>%
+  image_annotate("When you realise whose \n been controlling the red light",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "sans",
+                 gravity = "Center")
+
+first_row = c(lookup, meme_text1) %>%
+  image_append()
+
+second_row = c(orange_cat, meme_text2) %>%
+  image_append()
+
+meme_creation = c(first_row, second_row) %>%
+  image_append(stack = TRUE)
+
+#meme_creation
+
+```
+
+
+### Animated
+!["animated_meme"](animated_meme.gif)
+
+Key component:
+
+In this animated scenario, I have the following meme_inspo2 that have 8 different images which i can animated them in any order with different text captions.
+
+In order to have different frames, I cropped the images and added text on top to explain different reactions for stats 220.
+
+I also added some filter such as noise or implode to add additional effects that were not covered in the course.
+```{r animation-code, eval=FALSE}
+
+image1 = image_read("1.png") %>%
+  image_scale(400) %>%
+  image_annotate("          Learning Stats 220",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet")
+
+image2 = image_read("2.png") %>%
+  image_scale(400) %>%
+  image_annotate("    Realising its coding course",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet") %>%
+  image_noise()
+
+image3 = image_read("3.png") %>%
+  image_scale(400) %>%
+  image_annotate("    There are multiple project",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet")%>%
+  image_noise()
+
+
+image4 = image_read("4.png") %>%
+  image_scale(450) %>%
+  image_annotate("      There are test and exam",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet")%>%
+  image_implode(factor = 0.5)
+
+image_1 = image_read("inspo_meme2.png") %>%
+    image_crop("260x350") %>%
+      image_scale(400) %>%
+        image_annotate("Lastly",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet")
+
+image5 = image_read("1.png") %>%
+  image_scale(400) %>%
+  image_annotate("         It's not double pass",
+                 color = "#FFFFFF",
+                 size = 28,
+                 font = "Trebuchet")
+
+template_animation = c(image1, image2, image3, image5, image4)
+
+animated_meme = image_animate(template_animation, fps=0.5)
+```
+
+## Creativity
+For Creativity, I added headings 3 to separate the static and animated memes for a more precise accurate explanation. Thus, with an additional heading, I can add more CSS code (different fonts, color, etc).
+
+I also incorporated different filters effects and others that were not covered in class, for examples, cropping and filtering. Filter such as noise (added more graininess) or implode (collapsing in midway). I wanted to use more filter however, the original image were already heavily edited, thus any more filter would result in a very distorted images. 
+
+There was also a bug where the FPS of the animation would not accept the factor of 100. The higher the number is, the faster the animation would go, so we want to have a low number that is a factor of 100 (this slows down the animation so the user are able to read the text). However, for some reason it wont accept 0.1, I do not know if this are intentional, however,i managed to fix it by using 0.5 so in theory all floats number should be an acceptable input but in practice it does not (because of the FPS=0.1 Error). An fps of 1 is still a bit too fast for an average user to read the whole text.
+
+I could incorporated some flipping image, rotating text, blurriness, and other filters effect. However, most of them are unnecessary and could impact the "funniness" of the meme.
+
+In terms of CSS, I used more that the minimum 3 to further emphasise the impact of css. For example, different background, font size, font type, border, etc.
+  
+
+## Learning reflection
+One of the things i learn from module one is how responsive everything correlates to one another. For example, we can incorporate R-code with CSS, markdown(HTML temporary replacement) and convert them to different output such as, html, pdf, etc. This is very useful as today's web development is getting more advanced everyday(new framework, etc) and the more responsive the tool is, the better we could do the work.
+
+In addition to that, we also learn GitHub, which is a fundemental thing to learn as it is the most popular tools programmer use to share and save their work. In this scenario, we could showcase each of our project online and see the progress we made within GIT (Version control with push and pull history meta data).
+
+Im more curious about exploring integrating csv data to Rstudio which we can analyse further and create interactive charts and statistical analyst (also using python for analysis) and upload to Github to share the work.

@@ -1,0 +1,19 @@
+#```{r}
+setwd("C:/Users/phili/Documents/Stats220/Project 1")
+install.packages("magick")
+#```
+
+
+#```{r}
+library(magick)
+
+
+orange_cat = image_read("inspo_meme.gif") %>%
+  image_scale(100)
+
+orange_cat
+
+# Add this:
+#   c(), image_blank(),image_read(), image_annotate(), image_append()
+#```
+
