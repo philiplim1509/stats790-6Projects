@@ -3,7 +3,7 @@
     "path": "C:/Users/Philip/OneDrive - The University of Auckland/Uni 2024 S1/Stats 220/Project 1/project1_report.Rmd",
     "project_path": "project1_report.Rmd",
     "type": "r_markdown",
-    "hash": "1828578572",
+    "hash": "386806897",
     "contents": "",
     "dirty": false,
     "created": 1710295517936.0,
@@ -12,16 +12,16 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "174,157",
-        "scrollLine": "103",
-        "last_setup_crc32": "80cbc0e683192eb0"
+        "cursorPosition": "13,27",
+        "scrollLine": "0",
+        "last_setup_crc32": ""
     },
-    "folds": "111|33|163|0|\n",
-    "lastKnownWriteTime": 1710318793,
+    "folds": "113|33|165|0|\n",
+    "lastKnownWriteTime": 1710319529,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1710318794010,
+    "last_content_update": 1710319529784,
     "read_only": false,
     "read_only_alternatives": []
 }

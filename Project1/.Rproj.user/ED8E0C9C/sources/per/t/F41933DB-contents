@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
 
 ```{css}
 body {
-  background-color: #659DBD;
+  background-color: #FAD5A5;
   font-size: 15px;
 }
 
@@ -45,6 +45,8 @@ The static and animated meme have all the requirements and additional code that 
 I also did the optional objective, below is the link to my GitHub pages, where I upload all my stats 220 project.
 
 [Github Link](https://github.com/philiplim1509/stats220)
+
+[Website for Project 1](https://philiplim1509.github.io/stats220/)
 
 Some of the images I used are saved locally in my PC. However, I uploaded everything on Git, please check the repository if you want to double check anything. Screenshot above shows what files is being stored in GIT.
 
@@ -173,6 +175,9 @@ There was also a bug where the FPS of the animation would not accept the factor 
 I could incorporated some flipping image, rotating text, blurriness, and other filters effect. However, most of them are unnecessary and could impact the "funniness" of the meme.
 
 In terms of CSS, I used more that the minimum 3 to further emphasise the impact of css. For example, different background, font size, font type, border, etc.
+
+I also did the optional objective and added the website to readme
+[Website for Project 1](https://philiplim1509.github.io/stats220/)
   
 
 ## Learning reflection
