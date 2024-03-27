@@ -1,0 +1,139 @@
+---
+title: "Project 2"
+author: "Philip Liman, Plim294"
+subtitle: "STATS 220 Semester One 2024"
+output: 
+  html_document:
+    code_folding: hide
+date: "2024-03-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css} 
+body { background-color: #FAD5A5; font-size: 15px; }
+
+h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
+
+h3 { color: maroon; font-family: Arial, Helvetica, sans-serif; }
+```
+## Introduction
+
+For this part, I want to focus on how social media could impact sleeping habits.
+
+Guidelines: Regarding guidelines, I followed data governance and privacy, especially the UOA guiding privacy principles. Therefore, I followed guideline 1, which is to communicate my purpose. My forms contain a clear introduction explaining the purpose of data collection. The data will be collected for Stats 220 project two and shared among the markers and myself. I also stated that all responses are made anonymously.
+
+The second guideline I followed was asking for the data I needed. In this context, I asked about the participant's age, gender, sleep schedule and frequent social media apps (for a more accurate question description, please check the forms). All the questions I asked will be required to do statistical analysis.
+
+The next guideline was to use validation rules for responses. In this context, every question that was asked had validation rules. Therefore, the user cannot give out the wrong input.
+
+Other UX improvement I made for the forms are to add images to some of the title box.
+
+The data I collected would allow me to analyse changes over several weeks, particularly the average number of hours spent sleeping and the time spent on social media before sleeping. With these two questions, we can make some analysis for correlation; for example, if the amount of time spent on social media before sleeping increased, we believe the amount of time spent sleeping should be decreased. We can also compare how different genders can have a favourite social media app to use before bed by using the gender and favourite social media questions.
+
+[Forum](https://forms.gle/1oXSaGWmkLXRHCFu7).
+
+## Analytics
+### Static Comment:
+1. The average participant age is 27.2
+2. The highest median age belong to the gender "Prefer not to say" with a count of 24
+3. Users who use social media before heading to bed are most likely to have an impacted sleep and no impact at all (both at count:12)
+
+### 
+```{r}
+library(tidyverse)
+library(dplyr)
+
+#Reads the data frame and assign a variable name to each columns
+learning_data <- data.frame(read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vSI6cLoMaiWKH9pocOkC40BlUYBPz2V-UDtZ1Evz-qG0UOVd5ML_ZGBEDz7L3-zkxa8fSPf2KyY57mB/pub?gid=1662325778&single=true&output=csv") %>%
+    rename(
+        age = 2,
+        gender = 3,
+        frequent_social = 4,
+        hour_social = 5,
+        effect_social = 6,
+        emotion_social = 7,
+        sleep = 8
+    )
+)
+```
+### Static and paste function
+```{r}
+# Static summary value 1 - the mean of the user's age
+mean(learning_data[["age"]])
+
+# Static summary value 2 - the highest age median of the gender group
+all_median = learning_data %>% 
+  group_by(gender) %>%
+  summarise(median_age = median(age))
+all_median["median_age"]
+
+#Dynamic code (Paste)
+paste("The highest median age belong to the gender 'Prefer not to say' with a count of", all_median[["median_age"]][3], " Years old")
+paste("The average participant age is ", round(mean(learning_data[["age"]]),1), " Years old")
+```
+
+### Informative Bar (Bar charts) 
+```{r}
+# bar plot - creating a bar plot to indicate the each gender's social media effect on their sleep
+bar_plot1 = learning_data %>% ggplot(aes(x = sleep, y = gender, fill = effect_social)) + geom_bar(position = "dodge", stat = "identity") + theme_bw()
+bar_plot1
+
+# below variable holds the dataframe that is group by social media effect (effect_social) and their emotion due to social media (emotion social), and calculate the percentage of each levels in emotion social's number of occurrence
+percentage_data = learning_data %>%
+  group_by(effect_social, emotion_social) %>%
+  summarise(count = n()) %>%
+  group_by(effect_social) %>%
+  mutate(percentage = count / sum(count) * 100)
+
+# below variable holds the dataframe that is group by effect_social and sum each effect_social's level 
+sum_count = percentage_data %>%
+  group_by(effect_social) %>%
+  summarise(summation = sum(count))
+#sum_count
+
+# Below vectorised variable assigns each emotion level with appropriate colour 
+colour = c(Anxious="#d6b4fc", Depressed="#d4d4d4", Excited="yellow", Frustrated="#ff6242", "I am not sure"="pink", Relax="lightblue")
+
+# bar_plot2 - creating a stacked bar plot to indicate the each sleep impact by social media, in percentage 
+bar_plot2 = ggplot(percentage_data, aes(x = effect_social, y = percentage, fill = emotion_social)) + geom_bar(stat = "identity") + scale_fill_manual(values=colour) + theme_bw()
+bar_plot2
+```
+
+### Creativity (Boxplot)
+```{r}
+# box_plot - creating a box plot to indicate the user ages' quantile, mean, median for each gender
+box_plot = learning_data %>% 
+  ggplot() + 
+  geom_boxplot(aes(x = age, y = gender, fill = gender), alpha = 0.8) + 
+  scale_fill_brewer(palette = "BuPu") + 
+  scale_color_brewer(palette = "BuPu") +
+  stat_summary(fun = "mean", geom = "point", mapping = aes(x = age, y = gender), shape = 2, size = 3, color = "blue") +
+  theme_bw()
+box_plot
+
+# box_plot1 - creating a box plot to indicate the overall user ages' quantile, mean, median 
+box_plot1 = learning_data %>% 
+  ggplot() +
+  geom_boxplot(aes(x = age, y = 0), alpha = 0.8, fill = "gray", width = 0.5) +
+  stat_summary(fun = "mean", geom = "point", mapping = aes(x = age, y = 0), shape = 2, size = 3, color = "blue") +
+  theme_bw()
+box_plot1
+```
+
+
+## Creativity
+
+I incorporated some of the content from Module 1 or Project 1; for example, I added CSS code to make the HTML output prettier and better. I also added the HTML link to my GitHub account and published the website on my GitHub.
+
+In terms of forum design, I added more questions. This is to emphasize the analysis sections further. I also added images and customized the font and colour to make it look visually appealing.
+
+In terms of creating the geom_plot, I have gone above and beyond for this section. I'll explain the static value first. Firstly, I find the average age (27.2) using the average function, which is my first static statement. However, I prefer it to be dynamic, so I added a boxplot to further emphasize the quartile range with the mean and median. The second statement of the static element is the highest median age belong to the gender "Prefer not to say" with 24. I emphasize this further by adding a boxplot age, while group by gender. The third statement is users who use social media before heading to bed are most likely to have an impacted sleep and no impact at all (both at count:12). I further emphasize this during the development of my advanced bar chart. For my Barchart, I used a lot of variables and function that were not taught in class, for example, group by, shape, size, fill, position, summarize, count, background color,and personal color according to their mood/feeling (all this function can be seen from the code). Not only that, I converted the dataframe into percentage first before transforming them into barchat.
+
+## Learning Reflection
+
+One important idea I learned from Module 2 on creating web-based dynamic reporting systems is the significance of leveraging interactive and real-time data visualization techniques to enhance decision-making processes. Traditional static reports often present data in a fixed format, limiting their effectiveness in conveying insights and facilitating quick responses to dynamic situations. However, by employing web-based technologies, in this case, using tidyverse package and reading the CSV file (always updates when the survey been answered), data can be presented dynamically, allowing users to interact with and explore the information in a more intuitive manner.
+
+I am particularly interested in exploring advanced techniques for data analysis and machine learning. This includes delving into predictive analytics, natural language processing (NLP), and deep learning algorithms.
