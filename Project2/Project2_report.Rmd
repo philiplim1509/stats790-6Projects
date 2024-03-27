@@ -12,13 +12,14 @@ date: "2024-03-27"
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
-```{css} 
+```{css}
 body { background-color: #FAD5A5; font-size: 15px; }
 
 h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
 
 h3 { color: maroon; font-family: Arial, Helvetica, sans-serif; }
 ```
+
 ## Introduction
 
 For this part, I want to focus on how social media could impact sleeping habits.
@@ -35,13 +36,20 @@ The data I collected would allow me to analyse changes over several weeks, parti
 
 [Forum](https://forms.gle/1oXSaGWmkLXRHCFu7).
 
+[Website](https://philiplim1509.github.io/stats220/)
+
+[Link to CSV](https://docs.google.com/spreadsheets/d/10TiWdak6JKC67x7hZylbHqdqy2Bv75lpkyc1qPv7_Xg/edit?resourcekey#gid=1662325778)
+
 ## Analytics
+
 ### Static Comment:
-1. The average participant age is 27.2
-2. The highest median age belong to the gender "Prefer not to say" with a count of 24
-3. Users who use social media before heading to bed are most likely to have an impacted sleep and no impact at all (both at count:12)
+
+1.  The average participant age is 27.2
+2.  The highest median age belong to the gender "Prefer not to say" with a count of 24
+3.  Users who use social media before heading to bed are most likely to have an 'impacted sleep' and 'no impact at all' (both at count:12) rather than 'it helps me sleep'.
 
 ### 
+
 ```{r}
 library(tidyverse)
 library(dplyr)
@@ -59,7 +67,9 @@ learning_data <- data.frame(read_csv("https://docs.google.com/spreadsheets/d/e/2
     )
 )
 ```
+
 ### Static and paste function
+
 ```{r}
 # Static summary value 1 - the mean of the user's age
 mean(learning_data[["age"]])
@@ -75,10 +85,11 @@ paste("The highest median age belong to the gender 'Prefer not to say' with a co
 paste("The average participant age is ", round(mean(learning_data[["age"]]),1), " Years old")
 ```
 
-### Informative Bar (Bar charts) 
+### Informative Bar (Bar charts)
+
 ```{r}
 # bar plot - creating a bar plot to indicate the each gender's social media effect on their sleep
-bar_plot1 = learning_data %>% ggplot(aes(x = sleep, y = gender, fill = effect_social)) + geom_bar(position = "dodge", stat = "identity") + theme_bw()
+bar_plot1 = learning_data %>% ggplot(aes(x = sleep, y = gender, fill = effect_social)) + geom_bar(position = "dodge", stat = "identity") + theme_bw() + labs(title="Each gender's social media effect on their sleep")
 bar_plot1
 
 # below variable holds the dataframe that is group by social media effect (effect_social) and their emotion due to social media (emotion social), and calculate the percentage of each levels in emotion social's number of occurrence
@@ -98,16 +109,18 @@ sum_count = percentage_data %>%
 colour = c(Anxious="#d6b4fc", Depressed="#d4d4d4", Excited="yellow", Frustrated="#ff6242", "I am not sure"="pink", Relax="lightblue")
 
 # bar_plot2 - creating a stacked bar plot to indicate the each sleep impact by social media, in percentage 
-bar_plot2 = ggplot(percentage_data, aes(x = effect_social, y = percentage, fill = emotion_social)) + geom_bar(stat = "identity") + scale_fill_manual(values=colour) + theme_bw()
+bar_plot2 = ggplot(percentage_data, aes(x = effect_social, y = percentage, fill = emotion_social)) + geom_bar(stat = "identity") + scale_fill_manual(values=colour) + theme_bw() + labs(title="Each sleep impact by social media, in percentage ")
 bar_plot2
 ```
 
 ### Creativity (Boxplot)
+
 ```{r}
 # box_plot - creating a box plot to indicate the user ages' quantile, mean, median for each gender
 box_plot = learning_data %>% 
   ggplot() + 
   geom_boxplot(aes(x = age, y = gender, fill = gender), alpha = 0.8) + 
+  labs(title= "User age Quantile, mean, median for each gender") +
   scale_fill_brewer(palette = "BuPu") + 
   scale_color_brewer(palette = "BuPu") +
   stat_summary(fun = "mean", geom = "point", mapping = aes(x = age, y = gender), shape = 2, size = 3, color = "blue") +
@@ -117,20 +130,22 @@ box_plot
 # box_plot1 - creating a box plot to indicate the overall user ages' quantile, mean, median 
 box_plot1 = learning_data %>% 
   ggplot() +
+  labs(title="The overall user ages' quantile, mean, median") +
   geom_boxplot(aes(x = age, y = 0), alpha = 0.8, fill = "gray", width = 0.5) +
-  stat_summary(fun = "mean", geom = "point", mapping = aes(x = age, y = 0), shape = 2, size = 3, color = "blue") +
+  stat_summary(fun.y = mean, geom = "point", aes(x=mean(age), y=0), shape = 18, size = 3, color = "red") +
   theme_bw()
 box_plot1
 ```
 
-
 ## Creativity
 
-I incorporated some of the content from Module 1 or Project 1; for example, I added CSS code to make the HTML output prettier and better. I also added the HTML link to my GitHub account and published the website on my GitHub.
+I incorporated some of the content from Module 1 or Project 1; for example, I added CSS code to make the HTML output prettier and better. I also added the HTML link to my GitHub account and published the website on my GitHub, as well on the readme.md.
 
 In terms of forum design, I added more questions. This is to emphasize the analysis sections further. I also added images and customized the font and colour to make it look visually appealing.
 
-In terms of creating the geom_plot, I have gone above and beyond for this section. I'll explain the static value first. Firstly, I find the average age (27.2) using the average function, which is my first static statement. However, I prefer it to be dynamic, so I added a boxplot to further emphasize the quartile range with the mean and median. The second statement of the static element is the highest median age belong to the gender "Prefer not to say" with 24. I emphasize this further by adding a boxplot age, while group by gender. The third statement is users who use social media before heading to bed are most likely to have an impacted sleep and no impact at all (both at count:12). I further emphasize this during the development of my advanced bar chart. For my Barchart, I used a lot of variables and function that were not taught in class, for example, group by, shape, size, fill, position, summarize, count, background color,and personal color according to their mood/feeling (all this function can be seen from the code). Not only that, I converted the dataframe into percentage first before transforming them into barchat.
+In terms of creating the ggplot, I have gone above and beyond for this section. I'll explain the static value first. Firstly, I find the average age of using my forums to be 27.2 years old using the average function, which is my first static statement. However, I prefer it to be dynamic, so I added a general age boxplot to further emphasize the quartile range, with the mean and median. The second statement of the static element is the highest median age, which belongs to the gender "Prefer not to say" with 24 years old. I emphasize this further by adding a boxplot age, while group by gender. The third statement is that users who use social media before heading to bed are most likely to have either an impacted sleep or no impact after using social media (with both cases at 12 users; the most amounts). I further emphasize this during the development of my advanced bar chart.
+
+For my barchart, I used a lot of variables and function that were not taught in class, for example, group by, shape, size, fill, position, summarize, count, background color, and personal color according to their mood/feeling (all this function can be seen from the code). The first bar plot shown indicates the effects of social media on the users' sleep on the total sleeping hours in each gender. I also used the characterisitic within the geom_bar i.e. position="dodge" to show each effects of social media side by side within the gender to better show difference. Furthermore, I also remove the grid background colour, using theme_bw() which is one of the techniques that is not learned from the module. The second stacked bar plot shown indicates the percentage of each users' emotions (emotion_social) on the effect of social media (effect_social). This bar plot is good because we are grouping the data by effect_social to show the number of emotion_social level occurence in that effect_social, which is not learned from our module. On top of group by, I also make a percentage out of each emotion_social in each effect_social to better convey the story and question. In addition, different colours used in this plot to correspond to the real world's emotion spectrum colours. Similar to the first bar plot, theme_bw() is used to remove the background colour.
 
 ## Learning Reflection
 
