@@ -62,10 +62,11 @@ calc3 <- selected_photos %>%
 calc3
 
 
-img_urls <- variable3$previewURL %>% na.omit()
+img_urls <- selected_photos$previewURL %>% na.omit()
 
 x <- image_read(img_urls) %>%
     image_join() %>%
     image_scale(400) %>%
-    image_animate(fps = 1)
+    image_animate(fps = 1) %>%
+    image_write("my_photos.gif")
 x
