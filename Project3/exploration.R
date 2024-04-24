@@ -5,13 +5,8 @@ library(magick)
 json_data <- fromJSON("pixabay_data.json")
 pixabay_photo_data <- json_data$hits
 
-# selected_photos = pixabay_photo_data %>% slice(1:50)
-selected_photos <- pixabay_photo_data
-
-selected_photos %>% select(pageURL)
-
-
-variable1 <- selected_photos %>%
+# Variable 1
+selected_photos <- pixabay_photo_data %>%
     mutate(tags_types = ifelse(str_detect(
         str_to_lower(tags),
         "fox|bear|bird|animal|mammal|canine|cat|predator|deer|dog"
@@ -20,53 +15,55 @@ variable1 <- selected_photos %>%
     "Not Animals"
     ))
 
-variable2 <- variable1 %>%
-    mutate(popular = ifelse(likes >= mean(likes) & views >= mean(views) & downloads >= mean(downloads),
+# Variable 2
+selected_photos <- selected_photos %>%
+    mutate(popular = ifelse(likes >= median(likes) | views >= median(views),
         "Popular",
         "Not Popular"
     ))
 
-variable3 <- variable2 %>%
-    mutate(active_user = ifelse(collections >= mean(collections),
-        "Active Collections",
-        "Not Active Collections"
-    ))
+# Variable 3
+selected_photos <- selected_photos %>%
+    mutate(view_download_ratio = views/downloads
+    )
 
-view(variable3)
+# selected_photos %>% count(popular)
 
+selected_photos <- selected_photos %>%
+    filter(userImageURL != "" & view_download_ratio > 1.6)
 
-
-filtered_photos <- variable3 %>%
-    filter(tags_types == "Not Animals" & popular == "Not Popular" & userImageURL != "" & active_user == "Not Active Collections")
-
-view(filtered_photos)
-
-selected_photos <- filtered_photos
 view(selected_photos)
 
 write_csv(selected_photos, "selected_photos.csv")
 
-calc1 <- variable3 %>%
+
+# ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+calc1 <- selected_photos %>%
     group_by(popular) %>%
-    summarise(total_likes = sum(likes), total_views = sum(views))
-calc1
+    summarise(avg_likes = round(mean(likes),1), avg_views = round(mean(views),1), avg_downloads = round(mean(downloads),1), avg_view_to_download_ratio = round(mean(view_download_ratio),4))
+view(calc1)
+
+
 
 calc2 <- selected_photos %>%
     group_by(tags_types) %>%
-    summarise(popular_count = sum(popular == "Popular", na.rm = TRUE))
+    summarise(popular_count = sum(popular == "Popular", na.rm = TRUE), not_popular_count = sum(popular == "Not Popular", na.rm = TRUE))
 calc2
 
 calc3 <- selected_photos %>%
-    group_by(popular, tags_types) %>%
+    group_by(popular) %>%
     summarise(download_count = sum(downloads))
 calc3
 
 
 img_urls <- selected_photos$previewURL %>% na.omit()
 
-x <- image_read(img_urls) %>%
+image_read(img_urls) %>%
     image_join() %>%
-    image_scale(400) %>%
+    image_scale(500) %>%
     image_animate(fps = 1) %>%
     image_write("my_photos.gif")
-x
+
