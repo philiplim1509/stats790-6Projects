@@ -1,0 +1,181 @@
+---
+title: "Project 3"
+author: "Philip Liman, Plim294"
+subtitle: "STATS 220 Semester One 2024"
+output: 
+  html_document:
+    code_folding: hide
+date: "2024-04-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css}
+body { background-color: #FAD5A5; font-size: 15px; }
+
+h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
+
+h3 { color: maroon; font-family: Avirial, Helvetica, sans-serif; }
+```
+
+## Introduction
+
+```{r}
+library(knitr)
+library(tidyverse)
+library(dplyr)
+library(jsonlite)
+library(magick)
+
+photo_data = read_csv("selected_photos.csv")
+selected_photos = photo_data
+```
+
+My two words are "Wild Nature". I choosed this because I like hiking a lot so i associate nature for this project and added wild to display ranges of images (could be animals or scenery).
+
+![Screenshot](top_photos.jpg)
+
+Features:
+
+  1. Most of the photos are landscape instead of portrait. 
+  2. All photos have at most 3 tags. 
+  3. Most of photos average likes are around one to five thousands. 
+  4. Most of the color are associate with light color (green, orange, white, etc)
+
+```{r}
+photo_data %>%
+  select(pageURL) %>%
+  knitr::kable()
+```
+
+![GIF](my_photos.gif)
+
+[Website](https://philiplim1509.github.io/stats220/)
+
+## Key features of selected photos
+
+```{r}
+calc1 <- selected_photos %>%
+    group_by(popular) %>%
+    summarise(avg_likes = round(mean(likes),1), avg_views = round(mean(views),1), avg_downloads = round(mean(downloads),1), avg_view_to_download_ratio = round(mean(view_download_ratio),4))
+# view(calc1)
+
+calc2 <- selected_photos %>%
+    group_by(tags_types) %>%
+    summarise(popular_count = sum(popular == "Popular", na.rm = TRUE), not_popular_count = sum(popular == "Not Popular", na.rm = TRUE))
+# calc2
+
+calc3 <- selected_photos %>%
+    group_by(tags_types) %>%
+    summarise(download_count = sum(downloads))
+#calc3
+
+# First Statement
+popular_avg_likes <- calc1 %>%
+  filter(popular == "Popular") %>%
+  pull(avg_likes)
+
+# Second Statement
+tag_animal_download <- calc3 %>%
+  filter(tags_types == "Animals") %>%
+  pull(download_count)
+
+tag_not_animal_download <- calc3 %>%
+  filter(tags_types == "Not Animals") %>%
+  pull(download_count)
+
+# Third Statement
+animal_popular_count <- calc2 %>%
+  filter(tags_types =="Animals") %>%
+  pull(popular_count) 
+
+not_animal_popular_count <- calc2 %>%
+  filter(tags_types =="Not Animals") %>%
+  pull(popular_count)
+
+# Fourth Statement
+popular_ratio <- calc1 %>%
+  filter(popular == "Popular") %>%
+  pull(avg_view_to_download_ratio)
+
+not_popular_ratio <- calc1 %>%
+  filter(popular == "Not Popular") %>%
+  pull(avg_view_to_download_ratio)
+
+```
+
+The average likes for a popular post are `r popular_avg_likes` .
+
+The total download counts for tag that are associated with animals are `r format(tag_animal_download, scientific=FALSE)`, while tag that are not associated with animal are `r format(tag_not_animal_download, scientific=FALSE)`.
+
+Tag that are associated with Animals have a popularity count of `r round(animal_popular_count,1)`, while Not Animals tag have a popularity count of `r not_animal_popular_count`.
+
+Popularity photos have a an average `r popular_ratio` download to view ratio, while not popular photos have a `r not_popular_ratio` download to view ratio.
+
+
+
+## Creativity
+
+For creativity I created two simple bar plot that compares the total downloads with different tags and the average likes between a popular image and not a popular images.
+
+The next part I did was to create a meme (a zebra meme). For this particular image, since the previewURL is too blurry, I had to use the direct link, however, for some reason, when opening the image link, it downloads instantly. To counter this, I had to use a new function called "download.file", this lets us bypass the preview image and download it locally to our machine after specifying the name and path location.
+
+As per usual, I uploaded the index.html to github pages and updated the link, as well as updating the markdown and upload all source code to github.
+
+I also added some CSS to further made the design more presentable and tidier.
+
+```{r}
+# Plot 1
+
+calc1 %>%
+ggplot(aes(x = popular, y = avg_likes)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Popularity", y = "Average Likes", title = "Average Likes by Popularity")
+
+# Plot 2
+calc3 %>%
+ggplot(aes(x = tags_types, y = download_count)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Types of Tags", y = "Total Downloads", title = "Total Downloads by different Tags")
+
+# Meme
+url = "https://cdn.pixabay.com/photo/2015/09/06/11/40/zebras-927272_1280.jpg"
+download.file(url, destfile = "zebra.png", mode = "wb")
+
+lookup = image_read("zebra.png") %>%
+  image_scale(400)
+
+meme_text = image_blank(400,225,"#000000") %>%
+  image_annotate("Am I black covered in white stripe or
+  Am I white covered in black stripe",
+                 color = "#FFFFFF",
+                 size = 20,
+                 font = "sans",
+                 gravity = "Center")
+
+first_row = c(lookup, meme_text) %>%
+  image_append()
+
+first_row
+
+image_write(first_row, "meme.png")
+
+```
+
+
+
+## Learning reflection
+
+One important think i learned from this module was how important of creating new variable in our current dataset. This allows all sort of types of additional insight, for example, we can now create new categorical variable based on the current data we have (either numerical or categorical or character, even boolean) and create an insightful variable for further enhanced analysis.
+Creating new variable that related to the current dataset also gain further insight and can generate meaningful visualization.
+
+What I want to learn more is how to incorperate machine learning into this project. For example, how can machine learning add more variable to further advanced the analysis.
+
+
+## Appendix
+```{r file='exploration.R', eval=FALSE, echo=TRUE}
+
+```
+
