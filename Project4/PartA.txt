@@ -1,0 +1,20 @@
+Choose two YouTube channels that you are interested in exploring data about their videos.
+
+Channel 1:
+https://www.youtube.com/@LEMMiNO
+Channel 2:
+https://www.youtube.com/@videogamedunkey
+
+Describe two ideas you have for visualisations you could create to compare the two YouTube channels using data associated with their videos.
+Bar Chart Comparison of Video Engagement Metrics:
+Create a bar chart where each channel has a bar representing different engagement metrics such as likes, dislikes, comments, and views.
+Use different colors for each metric and stack them together for each channel to compare.
+This visualization can provide a quick comparison of the overall engagement level of the two channels and highlight which channel performs better in terms of audience interaction.
+Time Series Analysis of Video Performance:
+Plot a time series graph showing the number of views, likes, and comments over time for each channel.
+Use line graphs with different colors representing each metric for each channel.
+This visualization can help in understanding the trends in video performance over time for both channels. It can reveal patterns such as seasonal spikes, periods of increased activity, or the impact of specific events or uploads on engagement.-
+
+
+CSV LINK:
+https://docs.google.com/spreadsheets/d/e/2PACX-1vRAk1VTiPEDf6H_bk442dTuh3CTLgjyd7HDgh-QhlkyWs-onXy8_ZnOp2i_BxgM0hIYx_gTB-rfw4fT/pub?output=csv
