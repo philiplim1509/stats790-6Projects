@@ -1,0 +1,78 @@
+---
+title: "Project 4"
+author: "Philip Liman, Plim294"
+subtitle: "Visualising data about videos from the YouTube channels @LEMMiNO and @Rousseau"
+output: 
+  html_document:
+    code_folding: hide
+date: "2024-04-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css echo=FALSE}
+body { background-color: #FAD5A5; font-size: 15px; }
+
+h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
+
+h3 { color: maroon; font-family: Avirial, Helvetica, sans-serif; }
+```
+
+## Introduction
+
+My two youtube channel I selected are @LEMMiNO and @Rousseau
+
+[Lemmino Link](https://www.youtube.com/@LEMMiNO)
+
+[Rousseau Link](https://www.youtube.com/@Rousseau)
+
+I Choose this Rousseau mainly because its a youtube channel about piano music (it covers from classical, pop, to almost every genre) and I listen to his piano cover a lot when studying because its soothing and helps me focus. 
+For Lemmino, I followed his channel back it was from 2012 and it has significantly improve in terms of quality (content and production). Essentialy this channel is about informative content across various topics. I highly recommend visit his channel and watch some of his video if you have not.
+
+Two ideas before accessed the data:
+
+1. Subscriber Count between both channel across the year
+2. Plot a time series graph showing the number of views, likes, and comments over time for each channel.
+Use line graphs with different colors representing each metric for each channel.
+
+# Summarisation of data process:
+
+```{r}
+
+```
+
+
+## Creativity
+
+For creativity I created two simple bar plot that compares the total downloads with different tags and the average likes between a popular image and not a popular images.
+
+The next part I did was to create a meme (a zebra meme). For this particular image, since the previewURL is too blurry, I had to use the direct link, however, for some reason, when opening the image link, it downloads instantly. To counter this, I had to use a new function called "download.file", this lets us bypass the preview image and download it locally to our machine after specifying the name and path location.
+
+As per usual, I uploaded the index.html to github pages and updated the link, as well as updating the markdown and upload all source code to github.
+
+I also added some CSS to further made the design more presentable and tidier.
+
+```{r}
+
+
+```
+
+
+
+## Learning reflection
+
+One important think i learned from this module was how important of creating new variable in our current dataset. This allows all sort of types of additional insight, for example, we can now create new categorical variable based on the current data we have (either numerical or categorical or character, even boolean) and create an insightful variable for further enhanced analysis.
+Creating new variable that related to the current dataset also gain further insight and can generate meaningful visualization.
+
+What I want to learn more is how to incorperate machine learning into this project. For example, how can machine learning add more variable to further advanced the analysis.
+
+
+## Appendix
+```{r file='visualisations.R', eval=FALSE, echo=TRUE}
+
+```
+```{r file='data_story.R', eval=FALSE, echo=TRUE}
+
+```

@@ -59,15 +59,18 @@ videoPerYear %>%
         position = "dodge"
     ) +
     theme_bw() +
+   labs(x = "Year Released", y = "Total Video", title = "Total Videos Over the Years")
     scale_x_continuous(breaks = seq(2012, 2024, 2))
 
 ggsave("plot2.png")
+
+# Bar Chart 3 (Comparison of total popular video respective to their channel)
 
 # Finding the Mean for view count, like count, comment count (L = @LEMMiNO, R = @Rousseau)
 LMean <- youtube_data %>%
     filter(channelName == "@LEMMiNO") %>%
     summarise(viewCount = mean(viewCount), likeCount = mean(likeCount), commentCount = mean(commentCount))
-LMean
+# LMean
 
 RMean <- youtube_data %>%
     filter(channelName == "@Rousseau") %>%
@@ -79,7 +82,7 @@ RMean <- youtube_data %>%
 Lpopular <- youtube_data %>%
     filter(channelName == "@LEMMiNO") %>%
     mutate(
-        popular = ifelse(viewCount >= LMean$viewCount & likeCount >= LMean$likeCount & commentCount >= LMean$commentCount,
+        popular = ifelse(viewCount >= LMean$viewCount | likeCount >= LMean$likeCount | commentCount >= LMean$commentCount,
             "Popular", "Not Popular"
         )
     )
@@ -88,7 +91,7 @@ Lpopular <- youtube_data %>%
 Rpopular <- youtube_data %>%
     filter(channelName == "@Rousseau") %>%
     mutate(
-        popular = ifelse(viewCount >= RMean$viewCount & likeCount >= RMean$likeCount & commentCount >= RMean$commentCount,
+        popular = ifelse(viewCount >= RMean$viewCount | likeCount >= RMean$likeCount | commentCount >= RMean$commentCount,
             "Popular", "Not Popular"
         )
     )
@@ -101,9 +104,64 @@ popularData <- popularData %>%
     summarise(popular_count = sum(popular == "Popular", na.rm = TRUE))
 view(popularData)
 
+# Label
+label <- c("44 out of 100 videos are popular", "34 out of 100 vides are popular")
+
 ggplot(popularData, aes(x = channelName, y = popular_count, fill = channelName)) +
     geom_bar(stat = "identity") +
     labs(x = "Channel Name", y = "Popular Count", title = "Popular Count by Channel") +
-    geom_text(aes(label = paste("Total Videos:", n_videos)), vjust = -0.5, size = 3) +
+    geom_text(aes(label = label), position = "stack", vjust = -0.5, size = 3) +
     theme_bw()
 ggsave("plot3.png")
+
+
+
+# Bar plot 4 (Count the word occurance in the title column)
+title_word_counts <- youtube_data %>%
+    select(title) %>%
+    separate_rows(title, sep = " ") %>%
+    mutate(clean_word = str_to_lower(title) %>%
+        str_remove_all("[[:punct:]]")) %>%
+    filter(
+        !clean_word == ""
+    ) %>%
+    group_by(clean_word) %>%
+    summarise(n = n()) %>%
+    arrange(desc(n)) %>%
+    slice(1:10) %>%
+    ungroup()
+
+title_word_counts %>%
+    ggplot(aes(
+        x = reorder(clean_word, n),
+        y = n
+    )) +
+    geom_col(fill = "blue") +
+    geom_text(aes(label = clean_word),
+        colour = "blue",
+        size = 8,
+        position = position_nudge(y = 1.5)
+    ) +
+    geom_text(aes(label = n),
+        position = position_nudge(y = -1),
+        colour = "white",
+        size = 6
+    ) +
+    labs(
+        x = "word",
+        y = "number of songs"
+    ) +
+    theme_void()
+ggsave(("plot4.png"))
+
+
+ggplot(youtube_data, aes(x = yearReleased)) +
+    geom_line(aes(y = viewCount, color = "Views")) +
+    geom_line(aes(y = likeCount, color = "Likes")) +
+    geom_line(aes(y = commentCount, color = "Comments")) +
+    labs(x = "Date", y = "Count", color = "Metric", title = "Number of Views, Likes, and Comments Over Time") +
+    scale_color_manual(values = c("Views" = "blue", "Likes" = "green", "Comments" = "red")) +
+    scale_y_continuous(labels = scales::comma) +
+    scale_x_continuous(breaks = seq(2012, 2024, 2)) +
+    theme_minimal()
+ggsave(("fail_chart.png"))
