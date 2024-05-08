@@ -5,7 +5,7 @@ subtitle: "Visualising data about videos from the YouTube channels @LEMMiNO and 
 output: 
   html_document:
     code_folding: hide
-date: "2024-04-22"
+date: "2024-05-08"
 ---
 
 ```{r setup, include=FALSE}
@@ -21,6 +21,10 @@ h3 { color: maroon; font-family: Avirial, Helvetica, sans-serif; }
 ```
 
 ## Introduction
+
+[Website](https://philiplim1509.github.io/stats220/)
+
+[CSV](https://docs.google.com/spreadsheets/d/e/2PACX-1vRAk1VTiPEDf6H_bk442dTuh3CTLgjyd7HDgh-QhlkyWs-onXy8_ZnOp2i_BxgM0hIYx_gTB-rfw4fT/pub?output=csv)
 
 My two youtube channel I selected are @LEMMiNO and @Rousseau
 
@@ -39,36 +43,39 @@ Use line graphs with different colors representing each metric for each channel.
 
 # Summarisation of data process:
 
-```{r}
+I decided to use features such as comments, views, and likes counts from the dataset, as they are crucial for evaluating the performance of a YouTube channel. I chose to employ line charts for comparing numerical variables over time, such as views vs years, as they effectively illustrate trends and patterns in continuous data. On the other hand, for comparisons involving numerical and categorical variables, such as categorizing videos into popular and non-popular, I utilised bar charts. Bar charts provide a clear visual representation of comparisons between different categories, making them suitable for conveying differences or relationships between numerical and categorical data.
 
-```
+
+However, one of the charts I attempted, illustrating the channel metrics over time, did not yield desired results. For reference, here is the chart: 
+
+![fail_chart.png](fail_chart.png)
+
+The plot displayed a significant disparity between views count and the rest of the metrics (likes and comments), resulting in an offset beyond millions, rendering it ineffective for analysis.
+
+## Dynamic data story
+
+![data_story.gif](data_story.gif)
 
 
 ## Creativity
 
-For creativity I created two simple bar plot that compares the total downloads with different tags and the average likes between a popular image and not a popular images.
+For creativity i include more than 3 plots to my data story. This increase the overall complexity and add mores story to it. We can simplify the complexity of the code by combining multiple variables and levels into one straightforward plot, thus, enhancing interpretability (ie complex code, simple graph). I also added a few sentence to the graph to provide more insight and understanding of the data.
 
-The next part I did was to create a meme (a zebra meme). For this particular image, since the previewURL is too blurry, I had to use the direct link, however, for some reason, when opening the image link, it downloads instantly. To counter this, I had to use a new function called "download.file", this lets us bypass the preview image and download it locally to our machine after specifying the name and path location.
+For color coding, I mainly used red and white to symbolize youtube main color, ensuring contextual relevance. I also uses blue as a contrast to the red to enhance visual distinction. For the CSS, I use light color to use a more vibrant color, which is the theme of this project. The design structure is framed in a tidier approach, with CSS elements enhancing the overall presentation by incorporating borders, varied fonts, and colors to emphasize headings and improve visual appeal.
 
 As per usual, I uploaded the index.html to github pages and updated the link, as well as updating the markdown and upload all source code to github.
 
-I also added some CSS to further made the design more presentable and tidier.
+I also added the preview url as an additonal GIF.
 
-```{r}
-
-
-```
+![thumbnail.gif](thumbnail.gif)
 
 
 
 ## Learning reflection
 
-One important think i learned from this module was how important of creating new variable in our current dataset. This allows all sort of types of additional insight, for example, we can now create new categorical variable based on the current data we have (either numerical or categorical or character, even boolean) and create an insightful variable for further enhanced analysis.
-Creating new variable that related to the current dataset also gain further insight and can generate meaningful visualization.
+One of the most important ideas that I learned from this assignment is the significance of both static and dynamic visualizations. Static visualizations offer a straightforward approach by providing easy access to data without the need for additional code processing to visualize the data. They allow for quick understanding of patterns or trends in the data. Whereas, dynamic visualisations offer an interactive and engaging way to explore data, better conveying the  relationships between variables or groups within the data. By incorporating features like grouping, dynamic visualisations can provide deeper insights and enhance understanding of complex datasets. In conclusion, understanding the significance of both static and dynamic visualizations offers flexibility: static visuals enable quick data comprehension upfront, while dynamic ones support deeper insights as analysis progresses.
 
-What I want to learn more is how to incorperate machine learning into this project. For example, how can machine learning add more variable to further advanced the analysis.
-
-
+For future exploration, I would like to understand more about the interactivity of plots and discovering different chart types to enhance information visualisation. Understanding how to make plots interactive can greatly improve engagement and understanding, allowing users to explore data dynamically. In additional, exploring various chart types beyond the traditional ones like bar and line chart can offer unique ways to present data, potentially revealing insights that may not be as apparent with standard charts. Delving deeper into these areas will definitely expand my understanding of data visualisation.
 ## Appendix
 ```{r file='visualisations.R', eval=FALSE, echo=TRUE}
 

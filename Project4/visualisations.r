@@ -56,10 +56,11 @@ videoPerYear %>%
             fill = channelName
         ),
         stat = "identity",
-        position = "dodge"
+        position = "dodge",
+        width = 0.7
     ) +
     theme_bw() +
-   labs(x = "Year Released", y = "Total Video", title = "Total Videos Over the Years")
+   labs(x = "Year Released", y = "Total Video", title = "Total Videos Over the Years") +
     scale_x_continuous(breaks = seq(2012, 2024, 2))
 
 ggsave("plot2.png")
@@ -70,7 +71,7 @@ ggsave("plot2.png")
 LMean <- youtube_data %>%
     filter(channelName == "@LEMMiNO") %>%
     summarise(viewCount = mean(viewCount), likeCount = mean(likeCount), commentCount = mean(commentCount))
-# LMean
+LMean
 
 RMean <- youtube_data %>%
     filter(channelName == "@Rousseau") %>%
@@ -86,7 +87,7 @@ Lpopular <- youtube_data %>%
             "Popular", "Not Popular"
         )
     )
-
+Lpopular
 # @Rosseau popolar grouping
 Rpopular <- youtube_data %>%
     filter(channelName == "@Rousseau") %>%
@@ -136,22 +137,25 @@ title_word_counts %>%
         x = reorder(clean_word, n),
         y = n
     )) +
-    geom_col(fill = "blue") +
+    geom_col(fill = "lightblue") +
     geom_text(aes(label = clean_word),
-        colour = "blue",
+        colour = "lightblue",
         size = 8,
-        position = position_nudge(y = 1.5)
+        position = position_nudge(y = 3)
     ) +
     geom_text(aes(label = n),
         position = position_nudge(y = -1),
-        colour = "white",
+        colour = "black",
         size = 6
-    ) +
+    ) + theme_bw() +
+  theme(panel.grid = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank()) +
     labs(
-        x = "word",
-        y = "number of songs"
-    ) +
-    theme_void()
+        x = "Word",
+        y = "Word Occurance ",
+        title="Top 10 most used word in title"
+    ) 
 ggsave(("plot4.png"))
 
 
@@ -163,5 +167,15 @@ ggplot(youtube_data, aes(x = yearReleased)) +
     scale_color_manual(values = c("Views" = "blue", "Likes" = "green", "Comments" = "red")) +
     scale_y_continuous(labels = scales::comma) +
     scale_x_continuous(breaks = seq(2012, 2024, 2)) +
-    theme_minimal()
+    theme_bw()
 ggsave(("fail_chart.png"))
+
+
+thumbnail <- youtube_data$thumbnailUrl %>% na.omit()
+
+image_read(thumbnail) %>%
+  image_join() %>%
+  image_scale(500) %>%
+  image_animate(fps = 1) %>%
+  image_write("thumbnail.gif")
+
