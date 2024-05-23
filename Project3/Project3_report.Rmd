@@ -165,7 +165,6 @@ image_write(first_row, "meme.png")
 ```
 
 
-
 ## Learning reflection
 
 One important think i learned from this module was how important of creating new variable in our current dataset. This allows all sort of types of additional insight, for example, we can now create new categorical variable based on the current data we have (either numerical or categorical or character, even boolean) and create an insightful variable for further enhanced analysis.

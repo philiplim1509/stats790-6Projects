@@ -54,15 +54,26 @@ The most common word in release contents is '`r most_common_content_word`' with 
 ```{r file='partC.R'}
 
 ```
+
 Immigration peaked at the year 2003, while crime and education peaked at the year 2006 (This was during the labour/progressive coalition and after their peak, all of the keywords number of speeches decrease over the year.)
 
 
 
 ## Learning reflection
 
-I learned how to rape
+One very important idea that I’ve learned from this course is data scraping. I had never used data scraping once in my entire time at university, so learning how to extract information from a website will definitely help with my major, which is BUSAN (they don’t even teach about data scraping). This also enhances my skills in data collection and pre-processing. Another key aspect is understanding where to scrape data from. Not all data is free to scrape due to legal, ethical, or technical reasons. It’s important to respect the terms of service of websites and to scrape responsibly.
 
-One of the most important ideas that I learned from this assignment is the significance of both static and dynamic visualizations. Static visualizations offer a straightforward approach by providing easy access to data without the need for additional code processing to visualize the data. They allow for quick understanding of patterns or trends in the data. Whereas, dynamic visualisations offer an interactive and engaging way to explore data, better conveying the  relationships between variables or groups within the data. By incorporating features like grouping, dynamic visualisations can provide deeper insights and enhance understanding of complex datasets. In conclusion, understanding the significance of both static and dynamic visualizations offers flexibility: static visuals enable quick data comprehension upfront, while dynamic ones support deeper insights as analysis progresses.
+Joins are also a valuable skill to learn because, in real life, not all data is going to be provided in one dataset. Most likely, we have to combine more than one, and joins are an effective way to combine datasets.
 
-For future exploration, I would like to understand more about the interactivity of plots and discovering different chart types to enhance information visualisation. Understanding how to make plots interactive can greatly improve engagement and understanding, allowing users to explore data dynamically. In additional, exploring various chart types beyond the traditional ones like bar and line chart can offer unique ways to present data, potentially revealing insights that may not be as apparent with standard charts. Delving deeper into these areas will definitely expand my understanding of data visualisation.
+I want to learn more about advanced data scraping. For example, I could not scrape data that has interactive/hover elements in this assignment. I am also curious if we can bypass some of the robots.txt functions. If we could learn more about advanced data scraping and joins, I would be very interested.
+
 ## Self Review
+The two skills I believe I have improved the most are data wrangling and visualization, and communication and reporting:
+
+Using R, I have successfully learned how to import, clean, transform, and visualize data. The most notable skill is using code to manipulate the data (I usually use Excel for this). With R, I have gained a new skill set. Using ggplot is also helpful because it is very customizable, and there are many plots we can use. This relates back to Learning Outcome 2 (demonstrate programming concepts and skills...).
+
+Another concept is communication and reporting. Without this course, I would have never used R Markdown to develop my reports or HTML and CSS for web-based reporting. Now, I am able to write dynamic reports using web technologies. This relates to Learning Outcome 4 (develop communication skills, using HTML...).
+
+I want to include web scraping; however, we only briefly learned about it. I wish we could learn advanced techniques for it.
+
+Overall, I have not only strengthened my technical skills in data wrangling and visualization but also improved my ability to effectively communicate and report my findings.
