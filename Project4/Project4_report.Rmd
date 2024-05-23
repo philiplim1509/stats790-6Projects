@@ -41,7 +41,7 @@ Two ideas before accessed the data:
 2. Plot a time series graph showing the number of views, likes, and comments over time for each channel.
 Use line graphs with different colors representing each metric for each channel.
 
-# Summarisation of data process:
+## Summarisation of data process:
 
 I decided to use features such as comments, views, and likes counts from the dataset, as they are crucial for evaluating the performance of a YouTube channel. I chose to employ line charts for comparing numerical variables over time, such as views vs years, as they effectively illustrate trends and patterns in continuous data. On the other hand, for comparisons involving numerical and categorical variables, such as categorizing videos into popular and non-popular, I utilised bar charts. Bar charts provide a clear visual representation of comparisons between different categories, making them suitable for conveying differences or relationships between numerical and categorical data.
 
