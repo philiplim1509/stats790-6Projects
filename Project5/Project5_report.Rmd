@@ -1,0 +1,68 @@
+---
+title: "Project 5"
+author: "Philip Liman, Plim294"
+subtitle: "Creating data from digital sources"
+output: 
+  html_document:
+    code_folding: hide
+date: "2024-05-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css echo=FALSE}
+body { background-color: #FFDCDA; font-size: 15px; }
+
+h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
+
+h3 { color: maroon; font-family: Avirial, Helvetica, sans-serif; }
+```
+
+## Part A
+
+[Github Website](https://philiplim1509.github.io/stats220/)
+
+[Website Explore](https://www.worldometers.info/geography/how-many-countries-in-oceania/)
+
+My data context is the countries in Ocenia. It gives the population and subregion of the countries in Oceania. 
+
+I selected this data context because Oceania, as a geographical region, is where our home is. 
+It also includes countries ranging from large land masses like Australia and Papua New Guinea to small island nations in the Pacific.
+We can also do further exploration because it provides population and subregion (this might be usefull for grouping)
+
+```{r file='partA.R'}
+
+```
+## Part B
+```{r file='partB.R', results='hide'}
+
+```
+
+This is Hon Erica Stanford analysis of her released content:
+
+The total number of words across all release contents is `r total_words`.
+
+The average number of words per release is `r mean_words_per_release`.
+
+The most common word in release titles is '`r most_common_title_word`' with a count of '`r title_word_counts[1]`'.
+
+The most common word in release contents is '`r most_common_content_word`' with a count of '`r content_word_counts[1]`'.
+
+## Part C
+```{r file='partC.R'}
+
+```
+Immigration peaked at the year 2003, while crime and education peaked at the year 2006 (This was during the labour/progressive coalition and after their peak, all of the keywords number of speeches decrease over the year.)
+
+
+
+## Learning reflection
+
+I learned how to rape
+
+One of the most important ideas that I learned from this assignment is the significance of both static and dynamic visualizations. Static visualizations offer a straightforward approach by providing easy access to data without the need for additional code processing to visualize the data. They allow for quick understanding of patterns or trends in the data. Whereas, dynamic visualisations offer an interactive and engaging way to explore data, better conveying the  relationships between variables or groups within the data. By incorporating features like grouping, dynamic visualisations can provide deeper insights and enhance understanding of complex datasets. In conclusion, understanding the significance of both static and dynamic visualizations offers flexibility: static visuals enable quick data comprehension upfront, while dynamic ones support deeper insights as analysis progresses.
+
+For future exploration, I would like to understand more about the interactivity of plots and discovering different chart types to enhance information visualisation. Understanding how to make plots interactive can greatly improve engagement and understanding, allowing users to explore data dynamically. In additional, exploring various chart types beyond the traditional ones like bar and line chart can offer unique ways to present data, potentially revealing insights that may not be as apparent with standard charts. Delving deeper into these areas will definitely expand my understanding of data visualisation.
+## Self Review

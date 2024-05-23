@@ -34,5 +34,7 @@ populations <- webpage %>%
   html_nodes("#example2 tbody tr td:nth-child(3)") %>%
   html_text()
 
+title
+countryCount
 countries
 populations
