@@ -1,0 +1,105 @@
+---
+title: "Redemption project"
+author: "Philip Liman, Plim294"
+subtitle: "Redemption project"
+output: 
+  html_document:
+    code_folding: hide
+date: "2024-05-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, error=FALSE)
+```
+
+```{css echo=FALSE}
+body { background-color: #FFDCDA; font-size: 15px; }
+
+h2 { color: green; font-weight:700; font-size: 30px; font-family: "Lucida Console", "Courier New", monospace; border: 2px solid powderblue; }
+
+h3 { color: maroon; font-family: Avirial, Helvetica, sans-serif; }
+```
+
+## Intro
+
+[Github Website](https://philiplim1509.github.io/stats220/)
+
+[MemesWebsite](https://imgflip.com/)
+
+For the Redemption project, I will be focusing on Projects 1 and 3. To begin, Project 3 involves using an API to obtain a dataframe. I reviewed Project 4 to understand how the lecturer wrote the code to retrieve YouTube data. Inspired by this, I researched meme generator websites and discovered how to use their API.
+
+The API from this website returns 100 memes, ordered by the number of times they were captioned in the last 30 days.
+
+I utilized Google Sheets to create a script that calls the API and imports the relevant data into the sheets, then publishes it as a CSV. Below is the code to import the API data into Google Sheets:
+
+```{js}
+function fetchData() {
+  // Replace with your API URL
+  const apiUrl = 'https://api.imgflip.com/get_memes';
+  
+  // Fetch the JSON data from the API
+  const response = UrlFetchApp.fetch(apiUrl);
+  const json = response.getContentText();
+  const data = JSON.parse(json);
+  
+  // Get the 'memes' array from the JSON data
+  const memes = data.data.memes;
+
+  // Get the active sheet
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  
+  // Set headers
+  const headers = ['ID', 'Name', 'URL', 'Width', 'Height', 'Box Count', 'Captions'];
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  
+  // Set meme data
+  const memeData = memes.map(meme => [
+    meme.id,
+    meme.name,
+    meme.url,
+    meme.width,
+    meme.height,
+    meme.box_count,
+    meme.captions
+  ]);
+  sheet.getRange(2, 1, memeData.length, headers.length).setValues(memeData);
+}
+```
+
+With the data in hand, we can proceed with the animations. For this project, I will create a GIF for the thumbnail preview and a table displaying the top 10 most popular memes from the past month. I will not perform any in-depth analysis of the memes, as the only numerical data available is the number of captions. Instead, I will categorize the memes based on their popularity over the last 30 days.
+
+## top 10 most popular memes in the past month
+```{r file='code.R', results='hide'}
+
+```
+```{r}
+top_popular_memes %>%
+  select(Name, URL, Captions) %>%
+  mutate(Preview = paste0('<img src="', URL, '" width="100" />')) %>%
+  select(Name, Preview, Captions) %>%
+  knitr::kable(escape = FALSE, format = "html", col.names = c("Meme Name", "Preview", "Captions")) %>%
+  kable_styling(full_width = FALSE)
+```
+
+## Preview 100 memes thumbnails in the past 30 days
+
+![GIF](thumbnail.gif)
+
+## Reflections:
+Creating new variables in a dataset is crucial for gaining enhanced insights. By deriving variables from existing numerical, categorical, character, or boolean data, you can segment and analyze data more effectively. This process not only improves the depth of your analysis but also enables the creation of more meaningful visualizations. I also learned JavaScript to understand how the script works and correctly call the API. Additionally, I explored a new table library called kableExtra, which I discovered through a Google search for RStudio table libraries. It ranked among the top five easiest to use. I learned to use this library to properly display tables in RMarkdown HTML, as the original "knitr" code only displayed URLs and not images.
+
+Moving forward, I am interested in learning more about JavaScript. After writing some scripts to call the API, I am curious if JavaScript can be used to scrape some data. Initially, I considered scraping image URLs instead of calling the API.
+
+## Marks to be redeems
+
+Project 1 Lost marks: 
+
+Feedback: You have not used any comments in your code to explain your design.
+
+Response: I have now included comments in my code to explain its functionality.
+
+Project 3 Lost Marks:
+
+Feedback: Your learning reflection does not clearly connect to your personal learning for this module/project.
+
+Response: I have submitted work similar to Project 3, including reflections on it. The key differences are that I created a new script (similar to Project 4) to call the API and import data into sheets—a completely new topic, as we did not learn JavaScript. I also used a new library, kableExtra, to display a table with images in RMarkdown. Additionally, I revised my reflections to better align with what Project 3 reflections should include. So the creative side is using the new table library to display in HTML and writing JavaScript code to call the API.
