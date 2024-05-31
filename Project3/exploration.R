@@ -24,8 +24,7 @@ selected_photos <- selected_photos %>%
 
 # Variable 3
 selected_photos <- selected_photos %>%
-    mutate(view_download_ratio = views/downloads
-    )
+    mutate(view_download_ratio = views/downloads)
 
 # selected_photos %>% count(popular)
 
